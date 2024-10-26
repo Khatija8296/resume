@@ -1,0 +1,51 @@
+2024-10-26T05:03:10,986 Using pip 24.2 from C:\Users\Dell-3420-Ci3\AppData\Local\Programs\Python\Python312\Lib\site-packages\pip (python 3.12)
+2024-10-26T05:03:10,989 Non-user install because site-packages writeable
+2024-10-26T05:03:11,335 Created temporary directory: C:\Users\Dell-3420-Ci3\AppData\Local\Temp\pip-build-tracker-0d8oowlt
+2024-10-26T05:03:11,335 Initialized build tracking at C:\Users\Dell-3420-Ci3\AppData\Local\Temp\pip-build-tracker-0d8oowlt
+2024-10-26T05:03:11,335 Created build tracker: C:\Users\Dell-3420-Ci3\AppData\Local\Temp\pip-build-tracker-0d8oowlt
+2024-10-26T05:03:11,335 Entered build tracker: C:\Users\Dell-3420-Ci3\AppData\Local\Temp\pip-build-tracker-0d8oowlt
+2024-10-26T05:03:11,373 Created temporary directory: C:\Users\Dell-3420-Ci3\AppData\Local\Temp\pip-install-hl1377m3
+2024-10-26T05:03:11,665 Remote version of pip: 24.2
+2024-10-26T05:03:11,665 Local version of pip:  24.2
+2024-10-26T05:03:11,673 Was pip installed by pip? True
+2024-10-26T05:03:11,673 ERROR: Could not open requirements file: [Errno 2] No such file or directory: 'requirements.txt'
+2024-10-26T05:03:11,673 Exception information:
+2024-10-26T05:03:11,673 Traceback (most recent call last):
+2024-10-26T05:03:11,673   File "C:\Users\Dell-3420-Ci3\AppData\Local\Programs\Python\Python312\Lib\site-packages\pip\_internal\req\req_file.py", line 547, in get_file_content
+2024-10-26T05:03:11,673     with open(url, "rb") as f:
+2024-10-26T05:03:11,673          ^^^^^^^^^^^^^^^
+2024-10-26T05:03:11,673 FileNotFoundError: [Errno 2] No such file or directory: 'requirements.txt'
+2024-10-26T05:03:11,673 
+2024-10-26T05:03:11,673 During handling of the above exception, another exception occurred:
+2024-10-26T05:03:11,673 
+2024-10-26T05:03:11,673 Traceback (most recent call last):
+2024-10-26T05:03:11,673   File "C:\Users\Dell-3420-Ci3\AppData\Local\Programs\Python\Python312\Lib\site-packages\pip\_internal\cli\base_command.py", line 105, in _run_wrapper
+2024-10-26T05:03:11,673     status = _inner_run()
+2024-10-26T05:03:11,673              ^^^^^^^^^^^^
+2024-10-26T05:03:11,673   File "C:\Users\Dell-3420-Ci3\AppData\Local\Programs\Python\Python312\Lib\site-packages\pip\_internal\cli\base_command.py", line 96, in _inner_run
+2024-10-26T05:03:11,673     return self.run(options, args)
+2024-10-26T05:03:11,673            ^^^^^^^^^^^^^^^^^^^^^^^
+2024-10-26T05:03:11,673   File "C:\Users\Dell-3420-Ci3\AppData\Local\Programs\Python\Python312\Lib\site-packages\pip\_internal\cli\req_command.py", line 67, in wrapper
+2024-10-26T05:03:11,673     return func(self, options, args)
+2024-10-26T05:03:11,673            ^^^^^^^^^^^^^^^^^^^^^^^^^
+2024-10-26T05:03:11,673   File "C:\Users\Dell-3420-Ci3\AppData\Local\Programs\Python\Python312\Lib\site-packages\pip\_internal\commands\install.py", line 343, in run
+2024-10-26T05:03:11,673     reqs = self.get_requirements(args, options, finder, session)
+2024-10-26T05:03:11,673            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2024-10-26T05:03:11,673   File "C:\Users\Dell-3420-Ci3\AppData\Local\Programs\Python\Python312\Lib\site-packages\pip\_internal\cli\req_command.py", line 255, in get_requirements
+2024-10-26T05:03:11,673     for parsed_req in parse_requirements(
+2024-10-26T05:03:11,673                       ^^^^^^^^^^^^^^^^^^^
+2024-10-26T05:03:11,673   File "C:\Users\Dell-3420-Ci3\AppData\Local\Programs\Python\Python312\Lib\site-packages\pip\_internal\req\req_file.py", line 151, in parse_requirements
+2024-10-26T05:03:11,673     for parsed_line in parser.parse(filename, constraint):
+2024-10-26T05:03:11,673                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2024-10-26T05:03:11,673   File "C:\Users\Dell-3420-Ci3\AppData\Local\Programs\Python\Python312\Lib\site-packages\pip\_internal\req\req_file.py", line 332, in parse
+2024-10-26T05:03:11,673     yield from self._parse_and_recurse(filename, constraint)
+2024-10-26T05:03:11,673   File "C:\Users\Dell-3420-Ci3\AppData\Local\Programs\Python\Python312\Lib\site-packages\pip\_internal\req\req_file.py", line 337, in _parse_and_recurse
+2024-10-26T05:03:11,673     for line in self._parse_file(filename, constraint):
+2024-10-26T05:03:11,673                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2024-10-26T05:03:11,673   File "C:\Users\Dell-3420-Ci3\AppData\Local\Programs\Python\Python312\Lib\site-packages\pip\_internal\req\req_file.py", line 368, in _parse_file
+2024-10-26T05:03:11,673     _, content = get_file_content(filename, self._session)
+2024-10-26T05:03:11,673                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2024-10-26T05:03:11,673   File "C:\Users\Dell-3420-Ci3\AppData\Local\Programs\Python\Python312\Lib\site-packages\pip\_internal\req\req_file.py", line 550, in get_file_content
+2024-10-26T05:03:11,673     raise InstallationError(f"Could not open requirements file: {exc}")
+2024-10-26T05:03:11,673 pip._internal.exceptions.InstallationError: Could not open requirements file: [Errno 2] No such file or directory: 'requirements.txt'
+2024-10-26T05:03:11,732 Removed build tracker: 'C:\\Users\\Dell-3420-Ci3\\AppData\\Local\\Temp\\pip-build-tracker-0d8oowlt'

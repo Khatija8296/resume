@@ -1,0 +1,106 @@
+# Virtual Environment
+venv/
+env/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*$py.class
+
+# Compiled C extensions
+*.so
+
+# Third-party libraries installed via pip
+*.egg-info/
+*.dist-info/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Distribution / packaging
+.Python
+build/
+dist/
+downloads/
+develop-eggs/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+.installed.cfg
+*.egg
+
+# PyInstaller files
+*.manifest
+*.spec
+dist/
+build/
+
+# Output files
+*.pdf
+*.log
+*.csv
+resume_summary2.csv
+/data/output/*.txt
+
+# Caching directories
+.cache/
+.pdfminer_cache/
+
+# Flask upload directory
+uploads/
+
+# System-specific files
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Pyenv
+.python-version
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Translations
+*.mo
+*.pot
+
+# Spyder and Rope project settings
+.spyderproject
+.spyproject
+.ropeproject
+
+# Ignore YAML configuration files
+*.yaml
+*.yml
+
+# Ignore unnecessary data files
+data/
