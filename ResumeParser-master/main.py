@@ -852,6 +852,6 @@ def transform(observations, nlp):
 # Main entry point for the application
 if __name__ == '__main__':
     # Start the Flask application
-    app.run(debug=True, port=8000)
+    app.run(host='0.0.0.0', port=8000, debug=True)
 
 

@@ -72,55 +72,83 @@ import re
 from gensim.utils import simple_preprocess
 from bin import lib
 import spacy
+import nltk
+# Download necessary NLTK resources
+nltk.download('punkt')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('maxent_ne_chunker')
+nltk.download('words')
 
 # Improved regex patterns
 EMAIL_REGEX = r"[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}"
 PHONE_REGEX = r'\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}|\d{10}'
 NAME_REGEX = r'[A-Z][a-z]+(\s+[A-Z][a-z]+)?'
 
-def candidate_name_extractor(input_string, nlp):
+
+nlp = spacy.load("en_core_web_sm")  # or "en_core_web_md" for a larger model
+
+def candidate_name_extractor(input_string,nlp):
+    # First, attempt to extract names using regular expressions
+    regex_patterns = [
+        r'\b[A-Z][a-z]+\s[A-Z][a-z]+(?:\s[A-Z][a-z]+)?\b',  # Matches 'First Last' or 'First Middle Last'
+        r'\b[A-Z][a-z]+\s[A-Z][a-z]+\s[A-Z][a-z]+\b',  # Matches 'First Middle Last'
+    ]
+
+    combined_pattern = '|'.join(regex_patterns)
+    regex_matches = re.findall(combined_pattern, input_string)
+
+    # If regex matches are found, return the first match
+    if regex_matches:
+        return regex_matches[0]
+
+    # If no regex matches, fall back to the NER model
     doc = nlp(input_string)
+    doc_persons = [ent.text.strip() for ent in doc.ents if ent.label_ == 'PERSON']
 
-    # Extract entities
-    doc_entities = doc.ents
-
-    # Subset to person type entities
-    doc_persons = filter(lambda x: x.label_ == 'PERSON', doc_entities)
-    doc_persons = filter(lambda x: len(x.text.strip().split()) >= 2, doc_persons)
-    doc_persons = map(lambda x: x.text.strip(), doc_persons)
-    doc_persons = list(doc_persons)
-
-    # Assuming that the first Person entity with more than two tokens is the candidate's name
-    if len(doc_persons) > 0:
+    # Return the first match from NER, if available
+    if doc_persons:
         return doc_persons[0]
     return "NOT FOUND"
-
-
-# Load the pre-trained SpaCy model
-# nlp = spacy.load("en_core_web_sm")  # or "en_core_web_md" for a larger model
-
-# def candidate_name_extractor(input_string,nlp):
-#     # First, attempt to extract names using regular expressions
-#     regex_patterns = [
-#         r'\b[A-Z][a-z]+\s[A-Z][a-z]+(?:\s[A-Z][a-z]+)?\b',  # Matches 'First Last' or 'First Middle Last'
-#         r'\b[A-Z][a-z]+\s[A-Z][a-z]+\s[A-Z][a-z]+\b',  # Matches 'First Middle Last'
-#     ]
-#
-#     combined_pattern = '|'.join(regex_patterns)
-#     regex_matches = re.findall(combined_pattern, input_string)
-#
-#     # If regex matches are found, return the first match
-#     if regex_matches:
-#         return regex_matches[0]
-#
-#     # If no regex matches, fall back to the NER model
+# def candidate_name_extractor(input_string, nlp):
 #     doc = nlp(input_string)
-#     doc_persons = [ent.text.strip() for ent in doc.ents if ent.label_ == 'PERSON']
 #
-#     # Return the first match from NER, if available
-#     if doc_persons:
+#     # Extract entities
+#     doc_entities = doc.ents
+#
+#     # Subset to person type entities
+#     doc_persons = filter(lambda x: x.label_ == 'PERSON', doc_entities)
+#     doc_persons = filter(lambda x: len(x.text.strip().split()) >= 2, doc_persons)
+#     doc_persons = map(lambda x: x.text.strip(), doc_persons)
+#     doc_persons = list(doc_persons)
+#
+#     # Assuming that the first Person entity with more than two tokens is the candidate's name
+#     if len(doc_persons) > 0:
 #         return doc_persons[0]
 #     return "NOT FOUND"
+
+#02-11-2024
+def extract_text_from_pdf(pdf_path):
+    text = ""
+    with open(pdf_path, 'rb') as pdf_file:
+        pdf_reader = PyPDF2.PdfFileReader(pdf_file)
+        for page_num in range(pdf_reader.numPages):
+            page = pdf_reader.getPage(page_num)
+            text += page.extractText()
+    return text
+
+def extract_names(txt):
+    person_names = []
+
+    for sent in nltk.sent_tokenize(txt):
+        for chunk in nltk.ne_chunk(nltk.pos_tag(nltk.word_tokenize(sent))):
+            if hasattr(chunk, 'label') and chunk.label() == 'PERSON':
+                person_names.append(
+                    ' '.join(chunk_leave[0] for chunk_leave in chunk.leaves())
+                )
+
+    return person_names
+
+
 
 def extract_fields(df):
     for extractor, items_of_interest in lib.get_conf('extractors').items():
@@ -171,6 +199,14 @@ def transform(observations, nlp):
     # Extract contact fields
     observations['email'] = observations['text'].apply(lambda x: lib.term_match(x, EMAIL_REGEX))
     observations['phone'] = observations['text'].apply(extract_phone_numbers)  # Updated phone extraction
+
+    # Extract email addresses safely - **CHANGE**
+    observations['email'] = observations['text'].apply(
+        lambda x: lib.term_match(x, EMAIL_REGEX) or "NOT FOUND")  # **CHANGE**
+
+    # Extract phone numbers safely, defaulting to "NOT FOUND" if none are found - **CHANGE**
+    observations['phone'] = observations['text'].apply(
+        lambda x: extract_phone_numbers(x) if extract_phone_numbers(x) else ["NOT FOUND"])  # **CHANGE**
 
     # Extract skills
     observations = extract_fields(observations)
