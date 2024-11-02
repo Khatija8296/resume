@@ -71,6 +71,7 @@ import logging
 import re
 from gensim.utils import simple_preprocess
 from bin import lib
+import spacy
 
 # Improved regex patterns
 EMAIL_REGEX = r"[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}"
@@ -93,6 +94,33 @@ def candidate_name_extractor(input_string, nlp):
     if len(doc_persons) > 0:
         return doc_persons[0]
     return "NOT FOUND"
+
+
+# Load the pre-trained SpaCy model
+# nlp = spacy.load("en_core_web_sm")  # or "en_core_web_md" for a larger model
+
+# def candidate_name_extractor(input_string,nlp):
+#     # First, attempt to extract names using regular expressions
+#     regex_patterns = [
+#         r'\b[A-Z][a-z]+\s[A-Z][a-z]+(?:\s[A-Z][a-z]+)?\b',  # Matches 'First Last' or 'First Middle Last'
+#         r'\b[A-Z][a-z]+\s[A-Z][a-z]+\s[A-Z][a-z]+\b',  # Matches 'First Middle Last'
+#     ]
+#
+#     combined_pattern = '|'.join(regex_patterns)
+#     regex_matches = re.findall(combined_pattern, input_string)
+#
+#     # If regex matches are found, return the first match
+#     if regex_matches:
+#         return regex_matches[0]
+#
+#     # If no regex matches, fall back to the NER model
+#     doc = nlp(input_string)
+#     doc_persons = [ent.text.strip() for ent in doc.ents if ent.label_ == 'PERSON']
+#
+#     # Return the first match from NER, if available
+#     if doc_persons:
+#         return doc_persons[0]
+#     return "NOT FOUND"
 
 def extract_fields(df):
     for extractor, items_of_interest in lib.get_conf('extractors').items():

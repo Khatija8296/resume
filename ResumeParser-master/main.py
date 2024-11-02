@@ -642,7 +642,7 @@ def load(observations, nlp):
     :return: None
     """
     logging.info('Begin load')
-    output_path = os.path.join('C:\\Users\\Dell-3420-Ci3\\Downloads', 'resume_summary2.csv')
+    output_path = os.path.join('C:\\Users\\Dell-3420-Ci3\\Desktop', 'resume_summary1.csv')
     logging.info('Results being output to {}'.format(output_path))
 
     try:
