@@ -1,5 +1,5 @@
 gensim==3.7.1
-pandas==0.24.2
+pandas==1.1.5  # Updated to a newer compatible version
 pytz==2019.1
 pdfminer.six==20181108
 spacy==2.1.3
