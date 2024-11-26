@@ -2,5 +2,5 @@ gensim==4.3.0  # Latest stable version as of now
 pandas==1.5.3  # Updated to a newer stable version
 pytz==2022.7.1  # Updated to the latest stable version
 pdfminer.six==20201018  # Updated to a more recent version
-spacy==3.4.0  # Updated to a newer version compatible with Python 3.11
+spacy==3.5.0  # Updated to a newer version compatible with Python 3.11
 PyYAML==6.0  # Updated to the latest version
